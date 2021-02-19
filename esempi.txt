@@ -1,0 +1,16 @@
+
+1) Il metodo “.split” per separare le stringhe su uno specifico carattere:to
+
+mia_stringa = 'Ciao, come va?'
+lista_elementi = mia_stringa.split(',')
+
+
+2) La conversione di una stringa a valore numerico (floating point)
+
+
+mia_stringa = '5.5'
+mio_numero = float(mia_stringa)
+
+3) Sapere come aggiungere un elemento ad una lista
+mia_lista = [1,2,3]
+mia_lista.append(4)
