@@ -66,6 +66,10 @@ class CSVTimeSeriesFile:
     
        
 
+class ExamException(Exception):
+
+    pass
+
 #======================
 # Corpo del programma
 #======================
@@ -81,3 +85,5 @@ class CSVTimeSeriesFile:
 time_series_file = CSVTimeSeriesFile(name='data.csv')
 time_series = time_series_file.get_data()
 print(time_series )
+
+
