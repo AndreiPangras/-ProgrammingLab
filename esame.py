@@ -28,22 +28,23 @@ class CSVTimeSeriesFile:
         
         # Ora inizio a leggere il file linea per linea
         for line in my_file:
-            
+           
+  ''' 
             # Faccio lo split di ogni linea sulla virgola
-            elements = line.split(',')
+            elements = line.split(' ')
 
             # Se NON sto processando l'intestazione...
             if elements[0] != 'epoche':
-                    
+                   
                 # Setto la data ed il valore
                 epoche  = elements[0]
-                temp= elements[1]
-                
-                # La variabile "value" al momento e' ancora una stringa, poiche' ho letto da file di testo,
+                temp    = elements[1]
+                 
+                # La variabile "temp" al momento e' ancora una stringa, poiche' ho letto da file di testo,
                 # quindi converto a valore floating point, e se nel farlo ho un errore avverto. Questo e'
                 # un errore "recoverable", posso proseguire (semplicemente salto la linea).
                 try:
-                    value = float(temp)
+                    temp = float(temp)
                 except Exception as e:
                     
                     # Stampo l'errore
@@ -53,7 +54,9 @@ class CSVTimeSeriesFile:
                     continue
                 
                 # Infine aggiungo alla lista dei valori questo valore
-                temperature.append(temp)
+                #append puo passare solo 1 dato
+                temperature.append(epoche,temp)
+  '''
         
         # Chiudo il file
         my_file.close()
@@ -61,34 +64,18 @@ class CSVTimeSeriesFile:
         # Quando ho processato tutte le righe, ritorno i valori
         return temperature
     
-        
+       
 
 #======================
 # Corpo del programma
 #======================
 
-def  hourly_trend_changes(time_series ):
+#def  hourly_trend_changes(time_series ):
     #inizializzo un vettore vuoto
-    variazioni=[]
+    #variazioni=[]
 
 
-
-
-
-
-
-
-
-
-
-
-    return variazioni()
-
-
-
-
-
-
+   # return variazioni()
 
 
 time_series_file = CSVTimeSeriesFile(name='data.csv')
