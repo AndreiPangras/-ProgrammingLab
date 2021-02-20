@@ -113,31 +113,31 @@ def  hourly_trend_changes(time_series ):
       #controllare tramite index la ricerca dellla prima volta che hanno insierto il mio valore
       #fare val-1 e vedere se esiste .. se no ... allora considero solo le posizioni che ho 
       #se invece essite prendo anche quel valore per fare il trend 
-      i=0
-      lista_celsius=[]
-      
-      for item in lista_indici:
-          lista_tomporale=[]
-          #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
-          ricerca=lista_ore.index(lista_indici[i])
-          contatore=lista_ore.cont(lista_indici[i])
+    i=0
+    lista_celsius=[]  
+    for item in lista_indici:
+        lista_tomporale=[]
+        #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
+        ricerca=lista_ore.index(lista_indici[i])
+        contatore=lista_ore.count(lista_indici[i])
 
-          if(ricerca!=0):
-              temporanea=lista_temp[ricerca-1]
-              while ricerca<contatore:
+        if(ricerca!=0):
+            temporanea=lista_temp[ricerca-1]
+            while ricerca<contatore:
+              val=lista_temp[ricerca]
+              lista_tomporale.append(temporanea,val)
+              ricerca+=1
+
+        else:
+
+            while ricerca<contatore:
                 val=lista_temp[ricerca]
-                lista_tomporale.append([temporanea],[val])
+                lista_tomporale.append(val)
                 ricerca+=1
+        i+=1
+        lista_celsius.append(lista_tomporale)
 
-          else:
-
-              while ricerca<contatore:
-                  val=lista_temp[ricerca]
-                  lista_tomporale.append([val])
-                  ricerca+=1
-          lista_celsius.append([lista_tomporale])
-          i+=1
-      return lista_celsius
+    return lista_celsius
 
 
 
