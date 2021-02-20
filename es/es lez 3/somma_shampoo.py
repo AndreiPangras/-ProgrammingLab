@@ -11,3 +11,4 @@ for line in my_file:
 
 
 print(somma)
+
