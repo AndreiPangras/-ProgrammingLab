@@ -54,10 +54,13 @@ def  hourly_trend_changes(time_series ):
 
     lista_ore=[]
     lista_temp=[]
+    cont=0
+    lista_indici=[]
     for item in time_series:
 
-      epoch=(item[0]).strip('\n')
-      temperature=(item[1]).strip('\n')
+      epoch=item[0]
+      temperature=item[1]
+      temperature=temperature.strip()
 
       try:
           ora=(int(epoch)/3600)
@@ -76,6 +79,7 @@ def  hourly_trend_changes(time_series ):
       num=tempo.split('.')
 
       intero=num[0]
+
       try:
           temperature = float(temperature)
       except Exception as e:              
@@ -83,32 +87,71 @@ def  hourly_trend_changes(time_series ):
           print('Errore nela conversione a float: "{}"'.format(e))          
           # Vado al prossimo "giro" del ciclo, quindi NON eseguo quanto viene dopo (ovvero l'append)
           continue
+      
+      intero.strip()
+      if(cont==0):
+          lista_ore.append(intero)
+          lista_indici.append(intero)
+          cont+=1
+      elif(intero==lista_ore[cont-1]):
+          lista_ore.append(intero)
+          cont+=1
+      else:
+          lista_indici.append(intero)
+          lista_ore.append(intero)
+          cont+=1
 
-      lista_ore.append(intero)
+
       lista_temp.append(temperature)
+      #controllo se la lista e vuota .. se vuota non faccio ninete ..
+      #se non lo e
+      #potrei controllar4e che la mia item siua uguale alla  precedentemente inserito in lista .. 
+      #quando e diverso creo una lista e metto dentro a mo di stringa l'item
+      #cosi da poterlo usare dopo per fare la ricerca 
+      #cosidero un contatore che ogni volta che inserisco amumenta di 1 
+      #fino a quando non rovo che sono diversi .. e li devo 
+      #controllare tramite index la ricerca dellla prima volta che hanno insierto il mio valore
+      #fare val-1 e vedere se esiste .. se no ... allora considero solo le posizioni che ho 
+      #se invece essite prendo anche quel valore per fare il trend 
+      i=0
+      lista_celsius=[]
+      
+      for item in lista_indici:
+          lista_tomporale=[]
+          #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
+          ricerca=lista_ore.index(lista_indici[i])
+          contatore=lista_ore.cont(lista_indici[i])
 
-    #return lista_ore
+          if(ricerca!=0):
+              temporanea=lista_temp[ricerca-1]
+              while ricerca<contatore:
+                val=lista_temp[ricerca]
+                lista_tomporale.append([temporanea],[val])
+                ricerca+=1
+
+          else:
+
+              while ricerca<contatore:
+                  val=lista_temp[ricerca]
+                  lista_tomporale.append([val])
+                  ricerca+=1
+          lista_celsius.append([lista_tomporale])
+          i+=1
+      return lista_celsius
+
+
+
+
+      
+
+
+      
+    
+    #return len(lista_ore) 
     #return lista_temp
-
-#-------------------------------------------------------
-#creazione di liste con le ore e le temperature riuscita
+    #return lista_indici
 
 
-    # seleziona ogni item/lista... basta che la fai puntare con un for ....
-    #fai slip di quello chai hai e tiritrovi una stringa 
-    #la fai un valore intero con round()
-    #devi usare una variabile di appoggi che tine c0nto in che posizione e il tuo epoch 
-    #devi creare un modello trend per trovare poi che temp dovrebbe essere
-
-#prendi la lunghezza della lista per poi prendere unoa a una le lista .. transformarle in stringhee 
-#dividerle tramite split()
-#selezionare cosi l'epoche/3600
-#cosi da avere le ore .. confronta le epoche con lo stesso numero di ore 
-#selezionando cosi le sudette tmperatura 
-#per poi creare un modello di previsione e in caso 
-#sia sbagliato auumentare di uno un contatore che ceh alla fine dei dati di un Ora
-#scriva in una lista i valori 
-#
 
 
 time_series_file = CSVTimeSeriesFile(name='data.csv')

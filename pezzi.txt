@@ -1,0 +1,23 @@
+        try:
+            print(lista_ore.index(item[cont]))
+        except:
+            print("elemento non trovato")
+        cont+=1
+
+
+
+
+        
+    val=0
+    lista_indici=[]
+    for item in lista_ore:
+      if(val<=len(lista_ore)):
+          conto=lista_ore.cont(item[val])
+          ricerca=lista_ore.index(item[val])
+
+      val+=1
+      
+    return lista_indici
+
+
+
