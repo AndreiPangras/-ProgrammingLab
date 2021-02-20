@@ -87,8 +87,8 @@ def  hourly_trend_changes(time_series ):
           print('Errore nela conversione a float: "{}"'.format(e))          
           # Vado al prossimo "giro" del ciclo, quindi NON eseguo quanto viene dopo (ovvero l'append)
           continue
+      intero.strip( )
       
-      intero.strip()
       if(cont==0):
           lista_ore.append(intero)
           lista_indici.append(intero)
@@ -103,28 +103,43 @@ def  hourly_trend_changes(time_series ):
 
 
       lista_temp.append(temperature)
-      #controllo se la lista e vuota .. se vuota non faccio ninete ..
-      #se non lo e
-      #potrei controllar4e che la mia item siua uguale alla  precedentemente inserito in lista .. 
-      #quando e diverso creo una lista e metto dentro a mo di stringa l'item
-      #cosi da poterlo usare dopo per fare la ricerca 
-      #cosidero un contatore che ogni volta che inserisco amumenta di 1 
-      #fino a quando non rovo che sono diversi .. e li devo 
-      #controllare tramite index la ricerca dellla prima volta che hanno insierto il mio valore
-      #fare val-1 e vedere se esiste .. se no ... allora considero solo le posizioni che ho 
-      #se invece essite prendo anche quel valore per fare il trend 
+
   
+    i=0
+    lista_celsius=[]  
+    for item in lista_indici:
+        lista_tomporale=[]
+        #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
+        ricerca=lista_ore.index(lista_indici[i])
+        contatore=lista_ore.count(lista_indici[i])
 
+        if(contatore!=1):
+            if(ricerca!=0):
+                temporanea=lista_temp[ricerca-1]
+                while ricerca<contatore:
+                    val=lista_temp[ricerca]
+                    lista_tomporale.append(temporanea,val)
+                    ricerca+=1
+            else:
+                while ricerca<contatore:
+                  val=lista_temp[ricerca]
+                  lista_tomporale.append(val)
+                  ricerca+=1
+        else:
+            val=lista_temp[ricerca]
+            lista_celsius.append(val)
 
+        i+=1
+        lista_celsius.append(lista_tomporale)
+    #ti da le temperature raggrupate
+    return lista_celsius
 
-
-      
-
-
-      
-    
+    #ti da la lunghezza delle lista_ore
     #return len(lista_ore) 
+
+    #ti da le temperature
     #return lista_temp
+    #ti da la lista degli indici 
     #return lista_indici
 
 
