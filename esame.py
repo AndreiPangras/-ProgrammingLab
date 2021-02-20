@@ -118,21 +118,23 @@ def  hourly_trend_changes(time_series ):
                 temporanea=lista_temp[ricerca-1]
                 while ricerca<contatore:
                     val=lista_temp[ricerca]
-                    lista_tomporale.append(temporanea,val)
+                    lista_tomporale.append([temporanea,val])
                     ricerca+=1
             else:
                 while ricerca<contatore:
                   val=lista_temp[ricerca]
-                  lista_tomporale.append(val)
+                  lista_tomporale.append([val])
                   ricerca+=1
         else:
-            val=lista_temp[ricerca]
-            lista_celsius.append(val)
+          if(ricerca!=0):
+              temporanea=lista_temp[ricerca-1]
+              val=lista_temp[ricerca]
+              lista_celsius.append([temporanea,val])
 
         i+=1
         lista_celsius.append(lista_tomporale)
     #ti da le temperature raggrupate
-    return lista_celsius
+    #return lista_celsius
 
     #ti da la lunghezza delle lista_ore
     #return len(lista_ore) 
