@@ -25,3 +25,36 @@
 
 pezzo che controlla l'indice e ti da i valori relativi
 ----------------------------------------------------------------------------------------------
+      lista_tomporale=[]
+        #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
+        ricerca=lista_ore.index(lista_indici[i])
+        contatore=lista_ore.count(lista_indici[i])
+
+        if(contatore!=1):
+            if(ricerca!=0):
+                temporanea=lista_temp[ricerca-1]
+                while ricerca<contatore:
+                    val=lista_temp[ricerca]
+                    lista_tomporale.append([temporanea,val])
+                    ricerca+=1
+            else:
+                while ricerca<contatore:
+                  val=lista_temp[ricerca]
+                  lista_tomporale.append([val])
+                  ricerca+=1
+        else:
+          if(ricerca!=0):
+              temporanea=lista_temp[ricerca-1]
+              val=lista_temp[ricerca]
+              lista_celsius.append([temporanea,val])
+
+
+
+
+
+
+
+
+              ----------------------------------------------------
+              valore lista 2 
+              1547424600,22.21

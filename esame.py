@@ -105,36 +105,58 @@ def  hourly_trend_changes(time_series ):
       lista_temp.append(temperature)
 
   
-    i=0
+    numero=0
     lista_celsius=[]  
-    for item in lista_indici:
-        lista_tomporale=[]
+    for i in lista_indici:
+        lista_temporale=[]
         #vedo qualte volte mi si ripete un ora e qunad'e la prima volta che trovo quel dato
-        ricerca=lista_ore.index(lista_indici[i])
-        contatore=lista_ore.count(lista_indici[i])
+        #---------------------------------------------
+        #errore  nel count e index
+        #--------------------------------------------
+        controllo=lista_indici[numero]
+
+        ricerca=lista_ore.index(controllo)
+        contatore=lista_ore.count(controllo)
+        punt=ricerca+contatore
 
         if(contatore!=1):
             if(ricerca!=0):
                 temporanea=lista_temp[ricerca-1]
-                while ricerca<contatore:
+                lista_temporale.append(temporanea)
+                while ricerca<punt:
                     val=lista_temp[ricerca]
-                    lista_tomporale.append([temporanea,val])
+                    lista_temporale.append(val)
                     ricerca+=1
             else:
                 while ricerca<contatore:
                   val=lista_temp[ricerca]
-                  lista_tomporale.append([val])
+                  lista_temporale.append(val)
                   ricerca+=1
-        else:
+        else: 
           if(ricerca!=0):
-              temporanea=lista_temp[ricerca-1]
-              val=lista_temp[ricerca]
-              lista_celsius.append([temporanea,val])
 
-        i+=1
-        lista_celsius.append(lista_tomporale)
-    #ti da le temperature raggrupate
-    #return lista_celsius
+              temporanea_pre=lista_temp[ricerca-1]
+              temporanea_suc=lista_temp[ricerca+1]
+              val=lista_temp[ricerca]
+              lista_temporale.append(temporanea_pre)
+              lista_temporale.append(val)
+              lista_temporale.append(temporanea_suc)
+          else:
+              val=lista_temp[ricerca]
+              lista_temporale.append(val)
+        
+        numero+=1
+        lista_celsius.append(lista_temporale)
+   
+    return lista_celsius
+    
+
+    #fai un for su loista celsiu e guarda item per item e controlla e crea un trend
+
+    #mi torna tutti i val epoch transformati
+    #return lista_ore
+    
+
 
     #ti da la lunghezza delle lista_ore
     #return len(lista_ore) 
@@ -150,6 +172,4 @@ def  hourly_trend_changes(time_series ):
 time_series_file = CSVTimeSeriesFile(name='data.csv')
 time_series = time_series_file.get_data()
 print(hourly_trend_changes(time_series))
-#print(time_series )
-
 
