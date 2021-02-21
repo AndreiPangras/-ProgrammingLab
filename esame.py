@@ -104,7 +104,7 @@ def  hourly_trend_changes(time_series ):
 
       lista_temp.append(temperature)
 
-  
+    #return lista_indici
     numero=0
     lista_celsius=[]  
     for i in lista_indici:
@@ -144,30 +144,54 @@ def  hourly_trend_changes(time_series ):
           else:
               val=lista_temp[ricerca]
               lista_temporale.append(val)
-        
+                
         numero+=1
         lista_celsius.append(lista_temporale)
-   
-    return lista_celsius
+    #return lista_celsius
+
+    #mi restituisce le temperature ragggruppate per ore
+    #return lista_celsius
+    incremento=0
+    lista_finale=[]
+    for item in lista_celsius:
+        #incremento e il val che punta in lista_celsius
+        val=lista_celsius[incremento]
+        lung_lista=(len(val))-1
+        #direzzione creascente = True
+        #direzoine decrescente = False
+        i=0
+        #print(val) va tutot bene 
+        prev_direz=False
+        if(val[i]<val[i+1]):
+            prev_direz= True
+            i+=1
+        else:
+            i+=1
+        temp_direz= False
+        trend=0
+        while i<lung_lista:
+            if(val[i]==val[i+1]):
+                temp_direz=prev_direz
+            elif(val[i]<val[i+1]):
+                temp_direz= True
+            else:
+                temp_direz=False
+
+            if(prev_direz!=temp_direz):
+                prev_direz=temp_direz
+                trend+=1
+
+            i+=1
+
+        incremento+=1
+        lista_finale.append(trend)
+    return lista_finale
+
+       
+       
     
 
-    #fai un for su loista celsiu e guarda item per item e controlla e crea un trend
-
-    #mi torna tutti i val epoch transformati
-    #return lista_ore
-    
-
-
-    #ti da la lunghezza delle lista_ore
-    #return len(lista_ore) 
-
-    #ti da le temperature
-    #return lista_temp
-    #ti da la lista degli indici 
-    #return lista_indici
-
-
-
+  
 
 time_series_file = CSVTimeSeriesFile(name='data.csv')
 time_series = time_series_file.get_data()
