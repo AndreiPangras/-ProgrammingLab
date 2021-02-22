@@ -181,14 +181,18 @@ def  hourly_trend_changes(time_series ):
         #direzzione creascente = True
         #direzoine decrescente = False
         i=0
-        #print(val) va tutot bene 
-        prev_direz=False
-        if(val[i]<val[i+1]):
-            prev_direz= True
+        #print(val) va tutot bene
+        if(val[i]==val[i+1]):
             i+=1
-        else:
-            i+=1
-        temp_direz= False
+        else: 
+            if(val[i]<val[i+1]):
+                prev_direz= True
+                i+=1
+            else:
+                prev_direz= False
+                i+=1
+
+        #temp_direz= False
         trend=0
         while i<lung_lista:
             if(val[i]==val[i+1]):
@@ -215,7 +219,7 @@ def  hourly_trend_changes(time_series ):
 
   
 
-time_series_file = CSVTimeSeriesFile(name='data.csv')
+time_series_file = CSVTimeSeriesFile(name='data1.csv')
 time_series = time_series_file.get_data()
 print(hourly_trend_changes(time_series))
 
