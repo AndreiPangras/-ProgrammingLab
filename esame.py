@@ -61,74 +61,68 @@ def  hourly_trend_changes(time_series ):
     cont=0
     lista_indici=[]
     for item in time_series:
-      #salvo i dati separandoli tra epoche e temperature
-      epoch=item[0]
-      temperature=item[1]
-      #tolgo gli spazzi bianchi dalle temperature
-      temperature=temperature.strip()
+        #salvo i dati separandoli tra epoche e temperature
+        epoch=item[0]
+        temperature=item[1]
+        #tolgo gli spazzi bianchi dalle temperature
+        temperature=temperature.strip()
 
-      #chiedi a sta .. se io qua faccio
-      #if(epoch!=' '):
-      #   if(temperature!=' ')
-      #           -------------------
-      #           metti qua dentro il codice
-      #         -------------------------
-      #
-      #   else:
-      #       continue
-      #
-      # else:
-      #   continue
-      #
-      #
+      #controllo che nel epoch e nelle temperature ci sia qulcosa
+        if(epoch==' '):
+            continue
+        elif(temperature==' '):
+            continue
+        else:
+            try:
+                #transformo le emopoche in int in caso non lo fossero
+                # e divido per trovare il numero di ore 
+                ora=(int(epoch)/3600)
+                #tramite round arrotondo il valore con una cifra decimale 
+                tempo=round(ora,1)
+            except Exception as e:              
+                # Stampo l'errore
+                print('Errore nela conversione da epoch in ore int : "{}"'.format(e))          
 
-      try:
-        #transformo le emopoche in int in caso non lo fossero
-        # e divido per trovare il numero di ore 
-          ora=(int(epoch)/3600)
-          #tramite round arrotondo il valore con una cifra decimale 
-          tempo=round(ora,1)
-      except Exception as e:              
-          # Stampo l'errore
-          print('Errore nela conversione da epoch in ore int : "{}"'.format(e))          
+            #prendola variabile tempo e la trasfonrma in una stringa
+            #per poi splittarla cosi da avvere piu facilita nel fare i controllli dopo
+            try:
+                #converto le epoch da int a stringa 
+                #cosi da poter dividerle e prender solo un numero intero
+                tempo=str(tempo)
+            except Exception as e:
+                print('Errore nella conversione del tempo da int a stringa: "{}"'.format(e))
 
-        #prendola variabile tempo e la trasfonrma in una stringa
-        #per poi splittarla cosi da avvere piu facilita nel fare i controllli dopo
-      try:
-        #converto le epoch da int a stringa 
-        #cosi da poter dividerle e prender solo un numero intero
-          tempo=str(tempo)
-      except Exception as e:
-          print('Errore nella conversione del tempo da int a stringa: "{}"'.format(e))
+            num=tempo.split('.')
 
-      num=tempo.split('.')
+            intero=num[0]
 
-      intero=num[0]
-
-      try:
-        #converto le temperature in float se non lo fossero gia 
-          temperature = float(temperature)
-      except Exception as e:              
-          # Stampo l'errore
-          print('Errore nela conversione a float: "{}"'.format(e))          
-          # Vado al prossimo "giro" del ciclo, quindi NON eseguo quanto viene dopo (ovvero l'append)
-          continue
-      intero.strip( )
+            try:
+                #converto le temperature in float se non lo fossero gia 
+                temperature = float(temperature)
+            except Exception as e:              
+                # Stampo l'errore
+                print('Errore nela conversione a float: "{}"'.format(e))          
+                # Vado al prossimo "giro" del ciclo, quindi NON eseguo quanto viene dopo (ovvero l'append)
+                #----------------------------
+                #chiedi a sta del continue 
+                #------------------------------
+                continue
+            intero.strip( )
       
-      if(cont==0):
-          lista_ore.append(intero)
-          lista_indici.append(intero)
-          cont+=1
-      elif(intero==lista_ore[cont-1]):
-          lista_ore.append(intero)
-          cont+=1
-      else:
-          lista_indici.append(intero)
-          lista_ore.append(intero)
-          cont+=1
+            if(cont==0):
+                lista_ore.append(intero)
+                lista_indici.append(intero)
+                cont+=1
+            elif(intero==lista_ore[cont-1]):
+                lista_ore.append(intero)
+                cont+=1
+            else:
+                lista_indici.append(intero)
+                lista_ore.append(intero)
+                cont+=1
 
-
-      lista_temp.append(temperature)
+        lista_temp.append(temperature)
+      
 
     #return lista_indici
     numero=0
@@ -212,7 +206,7 @@ def  hourly_trend_changes(time_series ):
 
         incremento+=1
         lista_finale.append(trend)
-    #return lista_finale
+
     return lista_finale
 
        
