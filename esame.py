@@ -22,8 +22,9 @@ class CSVTimeSeriesFile:
         lista_gen=[]
         # Ora inizio a leggere il file linea per linea
         for line in my_file:
-
+            #tolgo da ogni riga lo spazio
             string=line.strip('\n')
+            #divido la stringa 
             elements = string.split(',')
 
             # Se NON sto processando l'intestazione...
@@ -51,19 +52,41 @@ class ExamException(Exception):
 #======================
 
 def  hourly_trend_changes(time_series ):
-
+    #inizializzo dei vettori vuoti per 
+    #le temperature
+    #le epoche convertite 
+    #e per una lista dove salvo i diversi valori delle ore 
     lista_ore=[]
     lista_temp=[]
     cont=0
     lista_indici=[]
     for item in time_series:
-
+      #salvo i dati separandoli tra epoche e temperature
       epoch=item[0]
       temperature=item[1]
+      #tolgo gli spazzi bianchi dalle temperature
       temperature=temperature.strip()
 
+      #chiedi a sta .. se io qua faccio
+      #if(epoch!=' '):
+      #   if(temperature!=' ')
+      #           -------------------
+      #           metti qua dentro il codice
+      #         -------------------------
+      #
+      #   else:
+      #       continue
+      #
+      # else:
+      #   continue
+      #
+      #
+
       try:
+        #transformo le emopoche in int in caso non lo fossero
+        # e divido per trovare il numero di ore 
           ora=(int(epoch)/3600)
+          #tramite round arrotondo il valore con una cifra decimale 
           tempo=round(ora,1)
       except Exception as e:              
           # Stampo l'errore
@@ -72,6 +95,8 @@ def  hourly_trend_changes(time_series ):
         #prendola variabile tempo e la trasfonrma in una stringa
         #per poi splittarla cosi da avvere piu facilita nel fare i controllli dopo
       try:
+        #converto le epoch da int a stringa 
+        #cosi da poter dividerle e prender solo un numero intero
           tempo=str(tempo)
       except Exception as e:
           print('Errore nella conversione del tempo da int a stringa: "{}"'.format(e))
@@ -81,6 +106,7 @@ def  hourly_trend_changes(time_series ):
       intero=num[0]
 
       try:
+        #converto le temperature in float se non lo fossero gia 
           temperature = float(temperature)
       except Exception as e:              
           # Stampo l'errore
@@ -152,6 +178,7 @@ def  hourly_trend_changes(time_series ):
     #mi restituisce le temperature ragggruppate per ore
     #return lista_celsius
     incremento=0
+    #lista dove vengono visulaizzati i trend
     lista_finale=[]
     for item in lista_celsius:
         #incremento e il val che punta in lista_celsius
@@ -185,6 +212,7 @@ def  hourly_trend_changes(time_series ):
 
         incremento+=1
         lista_finale.append(trend)
+    #return lista_finale
     return lista_finale
 
        
