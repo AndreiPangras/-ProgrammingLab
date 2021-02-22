@@ -62,10 +62,9 @@ def  hourly_trend_changes(time_series ):
     lista_indici=[]
     for item in time_series:
         #salvo i dati separandoli tra epoche e temperature
-        epoch=item[0]
-        temperature=item[1]
-        #tolgo gli spazzi bianchi dalle temperature
-        temperature=temperature.strip()
+        epoch=float(item[0])
+        temperature=float(item[1])
+
 
       #controllo che nel epoch e nelle temperature ci sia qulcosa
         if(epoch==' '):
@@ -212,6 +211,7 @@ def  hourly_trend_changes(time_series ):
         lista_finale.append(trend)
 
     return lista_finale
+    #return lista_celsius
 
        
        
@@ -219,7 +219,7 @@ def  hourly_trend_changes(time_series ):
 
   
 
-time_series_file = CSVTimeSeriesFile(name='data1.csv')
+time_series_file = CSVTimeSeriesFile(name='data.csv')
 time_series = time_series_file.get_data()
 print(hourly_trend_changes(time_series))
 
