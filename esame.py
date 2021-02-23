@@ -30,8 +30,8 @@ class CSVTimeSeriesFile:
             # Se NON sto processando l'intestazione...
             if elements[0] != 'epoch':
                 # Setto l'epoche  ed il valore
-                epoch =float (elements[0])
-                temp= float(elements[1])
+                epoch = elements[0]
+                temp= elements[1]
           #Crea una lista e inserisco la mia lista appena creata
                 lista_gen.append([epoch,temp])
   
@@ -75,7 +75,7 @@ def  hourly_trend_changes(time_series ):
             try:
                 #transformo le emopoche in int in caso non lo fossero
                 # e divido per trovare il numero di ore 
-                ora=(epoch)/3600
+                ora=(int(epoch)/3600)
                 #tramite round arrotondo il valore con una cifra decimale 
                 tempo=round(ora,1)
             except Exception as e:              
@@ -139,42 +139,28 @@ def  hourly_trend_changes(time_series ):
         punt=ricerca+contatore
 
         if(contatore!=1):
-            if(ricerca>1):
-                temporanea=lista_temp[ricerca-2]
-                lista_temporale.append(temporanea)
+            if(ricerca!=0):
                 temporanea=lista_temp[ricerca-1]
                 lista_temporale.append(temporanea)
                 while ricerca<punt:
                     val=lista_temp[ricerca]
                     lista_temporale.append(val)
                     ricerca+=1
-            elif(ricerca==0):
-                while ricerca<contatore:
-                    val=lista_temp[ricerca]
-                    lista_temporale.append(val)
-                    ricerca+=1
             else:
-                temporanea=lista_temp[ricerca-1]
-                lista_temporale.append(temporanea)
                 while ricerca<contatore:
-                    val=lista_temp[ricerca]
-                    lista_temporale.append(val)
-                    ricerca+=1
-
+                  val=lista_temp[ricerca]
+                  lista_temporale.append(val)
+                  ricerca+=1
         else: 
-          if(ricerca>1):
-              temporanea=lista_temp[ricerca-2]
-              lista_temporale.append(temporanea)
-              temporanea=lista_temp[ricerca-1]
-              lista_temporale.append(temporanea)
+          if(ricerca!=0):
+
+              temporanea_pre=lista_temp[ricerca-1]
+              temporanea_suc=lista_temp[ricerca+1]
               val=lista_temp[ricerca]
+              lista_temporale.append(temporanea_pre)
               lista_temporale.append(val)
-          elif(ricerca==0):
-              val=lista_temp[ricerca]
-              lista_temporale.append(val)
+              lista_temporale.append(temporanea_suc)
           else:
-              temporanea=lista_temp[ricerca-1]
-              lista_temporale.append(temporanea)
               val=lista_temp[ricerca]
               lista_temporale.append(val)
                 
@@ -187,6 +173,7 @@ def  hourly_trend_changes(time_series ):
     incremento=0
     #lista dove vengono visulaizzati i trend
     lista_finale=[]
+    direz_prev=None
     for item in lista_celsius:
         #incremento e il val che punta in lista_celsius
         val=lista_celsius[incremento]
@@ -194,9 +181,11 @@ def  hourly_trend_changes(time_series ):
         #direzzione creascente = True
         #direzoine decrescente = False
         i=0
+        trend=0
         #print(val) va tutot bene
         if(val[i]==val[i+1]):
             i+=1
+            prev_direz=direz_prev
         else: 
             if(val[i]<val[i+1]):
                 prev_direz= True
@@ -204,9 +193,12 @@ def  hourly_trend_changes(time_series ):
             else:
                 prev_direz= False
                 i+=1
+            if(direz_prev!=prev_direz)and (direz_prev!=None):
+                trend+=1
+
 
         #temp_direz= False
-        trend=0
+        
         while i<lung_lista:
             if(val[i]==val[i+1]):
                 temp_direz=prev_direz
@@ -215,19 +207,17 @@ def  hourly_trend_changes(time_series ):
             else:
                 temp_direz=False
 
-            if(prev_direz!=temp_direz):
+            if(prev_direz!=temp_direz)and prev_direz!=None:
                 prev_direz=temp_direz
                 trend+=1
 
             i+=1
-
+        direz_prev=prev_direz
         incremento+=1
         lista_finale.append(trend)
 
     return lista_finale
     #return lista_celsius
-    #return lista_indici
-    #return lista_ore
 
        
        
