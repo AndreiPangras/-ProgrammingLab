@@ -30,8 +30,8 @@ class CSVTimeSeriesFile:
             # Se NON sto processando l'intestazione...
             if elements[0] != 'epoch':
                 # Setto l'epoche  ed il valore
-                epoch = elements[0]
-                temp= elements[1]
+                epoch =float (elements[0])
+                temp= float(elements[1])
           #Crea una lista e inserisco la mia lista appena creata
                 lista_gen.append([epoch,temp])
   
@@ -75,7 +75,7 @@ def  hourly_trend_changes(time_series ):
             try:
                 #transformo le emopoche in int in caso non lo fossero
                 # e divido per trovare il numero di ore 
-                ora=(int(epoch)/3600)
+                ora=(epoch)/3600
                 #tramite round arrotondo il valore con una cifra decimale 
                 tempo=round(ora,1)
             except Exception as e:              
@@ -139,28 +139,42 @@ def  hourly_trend_changes(time_series ):
         punt=ricerca+contatore
 
         if(contatore!=1):
-            if(ricerca!=0):
+            if(ricerca>1):
+                temporanea=lista_temp[ricerca-2]
+                lista_temporale.append(temporanea)
                 temporanea=lista_temp[ricerca-1]
                 lista_temporale.append(temporanea)
                 while ricerca<punt:
                     val=lista_temp[ricerca]
                     lista_temporale.append(val)
                     ricerca+=1
-            else:
+            elif(ricerca==0):
                 while ricerca<contatore:
-                  val=lista_temp[ricerca]
-                  lista_temporale.append(val)
-                  ricerca+=1
-        else: 
-          if(ricerca!=0):
+                    val=lista_temp[ricerca]
+                    lista_temporale.append(val)
+                    ricerca+=1
+            else:
+                temporanea=lista_temp[ricerca-1]
+                lista_temporale.append(temporanea)
+                while ricerca<contatore:
+                    val=lista_temp[ricerca]
+                    lista_temporale.append(val)
+                    ricerca+=1
 
-              temporanea_pre=lista_temp[ricerca-1]
-              temporanea_suc=lista_temp[ricerca+1]
+        else: 
+          if(ricerca>1):
+              temporanea=lista_temp[ricerca-2]
+              lista_temporale.append(temporanea)
+              temporanea=lista_temp[ricerca-1]
+              lista_temporale.append(temporanea)
               val=lista_temp[ricerca]
-              lista_temporale.append(temporanea_pre)
               lista_temporale.append(val)
-              lista_temporale.append(temporanea_suc)
+          elif(ricerca==0):
+              val=lista_temp[ricerca]
+              lista_temporale.append(val)
           else:
+              temporanea=lista_temp[ricerca-1]
+              lista_temporale.append(temporanea)
               val=lista_temp[ricerca]
               lista_temporale.append(val)
                 
@@ -212,6 +226,8 @@ def  hourly_trend_changes(time_series ):
 
     return lista_finale
     #return lista_celsius
+    #return lista_indici
+    #return lista_ore
 
        
        
