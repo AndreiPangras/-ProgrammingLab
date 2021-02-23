@@ -12,16 +12,13 @@ class CSVTimeSeriesFile:
     def get_data(self,):     
         try:
             my_file = open(self.name, 'r')
-        except Exception as e:
-            
-            # Stampo l'errore
-            print('Errore nella lettura del file: "{}"'.format(e))
-            
+        except:
+            raise ExamException('Errore lettura file')
+              
             # Esco dalla funzione tornando "niente".
-            return None
         lista_gen=[]
         # Ora inizio a leggere il file linea per linea
-        for line in my_file:
+        for i, line in my_file:
             #tolgo da ogni riga lo spazio
             string=line.strip('\n')
             #divido la stringa 
@@ -30,13 +27,32 @@ class CSVTimeSeriesFile:
             # Se NON sto processando l'intestazione...
             if elements[0] != 'epoch':
                 # Setto l'epoche  ed il valore
-                epoch = elements[0]
-                temp= elements[1]
+                
+               
+            try:
+                epoch =round(float(elements[0]))
+            except:
+                continue
+            try:
+                 temp= float(elements[1])
+            except:
+                continue
+
           #Crea una lista e inserisco la mia lista appena creata
                 lista_gen.append([epoch,temp])
   
         # Chiudo il file
         my_file.close()
+        
+        for i,line in enumerate(lista_gen):
+            if (i==0):
+              continue
+            if i>1:
+                if(lista_gen[i][0]<=lista_gen[i-1][0]):
+
+                    raise ExamException('Ci sono valori fuori ordine oppure dupplicati')
+
+
         
         # Quando ho processato tutte le righe, ritorno i valori
         return lista_gen
@@ -62,8 +78,8 @@ def  hourly_trend_changes(time_series ):
     lista_indici=[]
     for item in time_series:
         #salvo i dati separandoli tra epoche e temperature
-        epoch=float(item[0])
-        temperature=float(item[1])
+        epoch=item[0]
+        temperature=item[1]
 
 
       #controllo che nel epoch e nelle temperature ci sia qulcosa
