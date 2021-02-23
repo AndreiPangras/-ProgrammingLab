@@ -18,7 +18,7 @@ class CSVTimeSeriesFile:
             # Esco dalla funzione tornando "niente".
         lista_gen=[]
         # Ora inizio a leggere il file linea per linea
-        for i, line in my_file:
+        for i, line in enumerate(my_file):
             #tolgo da ogni riga lo spazio
             string=line.strip('\n')
             #divido la stringa 
@@ -29,14 +29,14 @@ class CSVTimeSeriesFile:
                 # Setto l'epoche  ed il valore
                 
                
-            try:
-                epoch =round(float(elements[0]))
-            except:
-                continue
-            try:
-                 temp= float(elements[1])
-            except:
-                continue
+                try:
+                    epoch =round(float(elements[0]))
+                except:
+                    continue
+                try:
+                     temp= float(elements[1])
+                except:
+                    continue
 
           #Crea una lista e inserisco la mia lista appena creata
                 lista_gen.append([epoch,temp])
