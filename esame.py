@@ -274,7 +274,7 @@ def  hourly_trend_changes(time_series ):
 
         
 
-time_series_file = CSVTimeSeriesFile(name='data1.csv')
+time_series_file = CSVTimeSeriesFile(name='data.csv')
 time_series = time_series_file.get_data()
 print(hourly_trend_changes(time_series))
 
