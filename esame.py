@@ -1,7 +1,6 @@
 #======================
 # Classe per file CSV
 #======================
-
 class CSVTimeSeriesFile:
 
     def __init__(self, name):
