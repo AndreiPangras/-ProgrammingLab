@@ -9,7 +9,7 @@ class CSVTimeSeriesFile:
         # Setto il nome del file
         self.name = name
 
-    def get_data(self,):     
+    def get_data(self):     
       #provo ad aprire il file in modalita lettura
         try:
             my_file = open(self.name, 'r')
@@ -109,16 +109,17 @@ def  hourly_trend_changes(time_series ):
             try:
                 #converto le epoch da float a stringa 
                 #cosi da poter dividerle e prender solo un numero intero
-                tempo=str(ora)
+                ora=str(ora)
             except Exception as e:
                 print('Errore nella conversione delle ore da float a string: "{}"'.format(e))
 
-            num=tempo.split('.')
+            num=ora.split('.')
 
             intero=num[0]
             #utilizzo il comando strip per togli possibili spazzi
             intero.strip( )
             #controllo il valore di cont( che e un mio contatore)
+            #che viene usato per vedere la prima volta che inserisco i dati
             #cosi da riuscire a riempire 2 liste 
             #la prima cioe la lista_ore dove io salvo tutte le epoch transformate in ore
             #la seconda dove salvo solamente un unica volta l'ora
@@ -137,12 +138,12 @@ def  hourly_trend_changes(time_series ):
         lista_temp.append(temperature)
       
 
-    numero=0
+   
     lista_celsius=[]  
-    for i in lista_indici:
+    for i,line in enumerate(lista_indici):
         lista_temporale=[]
         #salvo in un variabile il valore preso dalla lista indici
-        controllo=lista_indici[numero]
+        controllo=lista_indici[i]
         #creo 2 variabile
         #la prima che contiene posizione dove io incontro il valore che sto considerando
         #la seconda che contiene quante volte e presente nel file il valore
@@ -189,7 +190,7 @@ def  hourly_trend_changes(time_series ):
               val=lista_temp[ricerca]
               lista_temporale.append(val)
                 
-        numero+=1
+       
         #inserisco in una lista , la mi lista con tutte  le temperature
         #da prendere in considerazione per calcolare il trend per ogni ora
         lista_celsius.append(lista_temporale)
@@ -270,6 +271,7 @@ def  hourly_trend_changes(time_series ):
         lista_finale.append(trend)
 
     return lista_finale
+    
 
 
         
