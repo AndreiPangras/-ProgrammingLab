@@ -271,8 +271,6 @@ def  hourly_trend_changes(time_series ):
         lista_finale.append(trend)
 
     return lista_finale
-    
-
 
         
 
